@@ -1,6 +1,6 @@
 package ru.spectrumdata.dump2021.comparison
 
-class KotlinInitialDemo(
+class JKC08_KotlinFullDemo(
     var myValue: String = "",
     ints: Iterable<Int> = emptyList(),
 ) {

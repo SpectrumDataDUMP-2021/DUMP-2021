@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class JavaInitialDemo {
+public class JKC08_JavaFullDemo {
     private String myValue;
-    private List<Integer> ints;
+    private final List<Integer> ints;
 
-    JavaInitialDemo(String myValue, Iterable<Integer> ints) {
+    JKC08_JavaFullDemo(String myValue, Iterable<Integer> ints) {
         setMyValue(myValue);
         ArrayList<Integer> internalInts = new ArrayList<>();
 
@@ -23,11 +23,11 @@ public class JavaInitialDemo {
         this.ints = List.of(internalInts.toArray(new Integer[]{}));
     }
 
-    JavaInitialDemo() {
+    JKC08_JavaFullDemo() {
         this("", Collections.emptyList());
     }
 
-    JavaInitialDemo(String myValue) {
+    JKC08_JavaFullDemo(String myValue) {
         this(myValue, Collections.emptyList());
     }
 

@@ -11,8 +11,18 @@ repositories {
     mavenCentral()
 }
 
+dependencies {
+    val kotestVersion = property("kotest.version")
+    testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
+    testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
+}
 
 
 tasks.withType<KotlinCompile>() {
     kotlinOptions.jvmTarget = "11"
+}
+
+
+tasks.withType<Test>() {
+    useJUnitPlatform()
 }
