@@ -8,7 +8,7 @@ public class JKC02_JavaImmutableVariables {
     private final int iX = 3;
     private int mX = 4;
 
-    public void someFunc(){
+    public void someFunc() {
         final int iY = 1;
         int mY = 2;
     }

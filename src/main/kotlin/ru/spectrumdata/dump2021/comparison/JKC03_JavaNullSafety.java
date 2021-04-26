@@ -5,13 +5,14 @@ public class JKC03_JavaNullSafety {
     private String myNullable = null;
 
     public String getMyNotNull() {
-        if(null == myNotNull){
+        if (null == myNotNull) {
             throw new NullPointerException();
         }
         return myNotNull;
     }
+
     public void setMyNotNull(String value) {
-        if(null == value){
+        if (null == value) {
             throw new NullPointerException();
         }
         this.myNotNull = value;

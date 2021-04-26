@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class JKC08_JavaFullDemo {
-    private String myValue;
     private final List<Integer> ints;
+    private String myValue;
 
     JKC08_JavaFullDemo(String myValue, Iterable<Integer> ints) {
         setMyValue(myValue);
