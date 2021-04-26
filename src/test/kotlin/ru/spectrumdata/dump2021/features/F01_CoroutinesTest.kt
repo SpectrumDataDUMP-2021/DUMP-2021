@@ -5,7 +5,7 @@ import io.kotest.matchers.shouldBe
 
 internal class F01_CoroutinesTest : StringSpec() {
     init {
-        "Сходится сумма"{
+        "Проверяем, что сумма сходится"{
             F01_Coroutines().parallelProcessing() shouldBe (0..9999).sum()
         }
     }

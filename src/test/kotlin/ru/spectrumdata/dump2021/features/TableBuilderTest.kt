@@ -53,13 +53,19 @@ internal class TableBuilderTest : StringSpec() {
 
             myschema__table1 shouldBe noDslCreatedTable
 
-            myschema__table1.toSql() shouldBe """CREATE TABLE IF NOT EXISTS myschema.table1 (
-id bigint NOT NULL,
-part smallint NOT NULL DEFAULT 0,
-extra jsonb NOT NULL,
-CONSTRAINT id_part_chk CHECK (id > 0 AND part > 0 AND part < 1000),
-CONSTRAINT id_part_pkey PRIMARY KEY (id,part)
-)"""
+            myschema__table1.toSql() shouldBe """
+                CREATE TABLE IF NOT EXISTS myschema.table1 (
+                id bigint NOT NULL,
+                part smallint NOT NULL DEFAULT 0,
+                extra jsonb NOT NULL,
+                CONSTRAINT id_part_chk CHECK (id > 0 AND part > 0 AND part < 1000),
+                CONSTRAINT id_part_pkey PRIMARY KEY (id,part)
+                );
+                COMMENT ON TABLE myschema.table1 IS 'Пример таблицы';
+                COMMENT ON COLUMN myschema.table1.id IS 'Это идентификатор!';
+                COMMENT ON COLUMN myschema.table1.part IS 'Это партиция!';
+                
+                """.trimIndent()
         }
     }
 }

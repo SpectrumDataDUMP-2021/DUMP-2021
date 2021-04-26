@@ -5,8 +5,9 @@ data class SqlColumn(
     val type: String,
     val notnull: Boolean = true,
     val comment: String? = null,
-    val default: String? = null
+    val default: String? = null,
 ) : ISqlElement {
+
     override fun toSql(): String {
         val nullString = if (notnull) "NOT NULL" else "NULL"
         val defaultString = if (default.isNullOrBlank()) "" else "DEFAULT ${default}"

@@ -9,23 +9,22 @@ package ru.spectrumdata.dump2021.features
  */
 val my2_2: () -> Int = { 2 * 2 }
 val my_sum: (Int) -> Int = { it + it }
+val my_param_sum: (x: Int, y: Int) -> Int = { x, y -> x + y }
 
-
-fun myPseudoBlock(body: () -> Unit) { // последний параметр - функция
+fun myPseudoBlock(body: () -> Unit) { // последний аргумент - функция
     println("Start")
     body()
     println("End")
 }
 
 fun myPseudoBlockUsage() {
-    myPseudoBlock {   // теперь мы можем использовать myPseudoBlock в RUBY-стиле
+    myPseudoBlock { // теперь мы можем использовать myPseudoBlock в Ruby-стиле
         println("hello world")
     }
 
     // а можем и по-обычному
     myPseudoBlock({ println("hello world") })
 }
-
 
 /**
  * Хвостовая рекурсия (компилируется именно в цикл, а не в рекурсию)

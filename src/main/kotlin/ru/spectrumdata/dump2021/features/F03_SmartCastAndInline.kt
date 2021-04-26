@@ -17,17 +17,21 @@ class F03_SmartCastAndInline {
     val list = listOf(A(), B()) // понимает, что это List<Iface>
 
     /**
-     * Понимает что у переменной известно null или не null и какой тип
+     * Данный кейс демонстрирует автоматическое распознавание типа переменной
      */
     fun someNullTypeCast() {
         val obj: Any? = when (Random.nextInt(1, 3)) {
             1 -> null
             2 -> "hello"
             else -> 4
-        } // изначально не известно, что же такое живет в obj
+        }
+
+        // Изначально не известно, содержит ли `obj` null
         if (null != obj) { // тут мы проверили значение на null
             println(obj.equals(123)) // и тут уже используем как не null
         }
+
+        // Изначально не известно, какой тип соответствует переменной `obj`
         if (obj is String) { // тут мы проверили, что это строка
             println(obj.toInt()) // и теперь весь код в контексте это знает
         }
@@ -36,6 +40,7 @@ class F03_SmartCastAndInline {
     /**
      * reified хак для обхода typeErasure
      */
+
     // сначала классический вариант Java стайл c явным использованием класса
     fun <T : Any> printing(value: T, clazz: KClass<T>): T {
         println("У нас тут переменная класса `${clazz.simpleName}`, со значением: `$value`")

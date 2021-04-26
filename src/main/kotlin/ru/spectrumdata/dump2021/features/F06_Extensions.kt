@@ -3,20 +3,17 @@ package ru.spectrumdata.dump2021.features
 import java.io.File
 import java.io.Reader
 
-
 // можно расширять системные классы как функциями
 // и этим решать какие-то неудобности и проблемы в API
-
 fun Int.cube() = this * this * this
+
 // так и свойствами
 val Int.asCube get() = this * this * this
 
 val c3f = 3.cube() // 9
 val c3p = 3.asCube // 9
 
-
 // можно расширять собственные интерфейсы, компаньоны
-
 interface IMyInterface {
     fun read(reader: Reader): String
 }

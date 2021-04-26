@@ -6,7 +6,6 @@ import ru.spectrumdata.dump2021.features.sqldsl.SqlTable
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
-
 class TableBuilder(val schema: String, val name: String) {
     fun build(): SqlTable {
         return SqlTable(
@@ -18,15 +17,15 @@ class TableBuilder(val schema: String, val name: String) {
         )
     }
 
-
     // изменяемый вариант колонки
     inner class SqlColumnBuilder(
         var name: String? = null,
         var type: String? = null,
         var notnull: Boolean = true,
         var comment: String? = null,
-        var default: String? = null
+        var default: String? = null,
     ) {
+
         fun build(): SqlColumn {
             return SqlColumn(
                 name = name ?: throw Exception("name not defined"),
@@ -59,7 +58,7 @@ class TableBuilder(val schema: String, val name: String) {
         }
     }
 
-    val columns: MutableList<SqlColumnBuilder> = mutableListOf()
+    private val columns: MutableList<SqlColumnBuilder> = mutableListOf()
 
     // для синтаксиса val myfield by INT
     val INT get() = SqlColumnBuilder(type = "int")
@@ -81,14 +80,14 @@ class TableBuilder(val schema: String, val name: String) {
     interface ICheckBuilder {
         operator fun provideDelegate(
             thisRef: Any?,
-            property: KProperty<*>
+            property: KProperty<*>,
         ): ReadOnlyProperty<Any?, SqlConstraint.Check>
     }
 
     inner private class CheckBuilder(val prefix: String? = null, val sql: String) : ICheckBuilder {
         override operator fun provideDelegate(
             thisRef: Any?,
-            property: KProperty<*>
+            property: KProperty<*>,
         ): ReadOnlyProperty<Any?, SqlConstraint.Check> {
             val prefix = this.prefix ?: property.name
             val result = SqlConstraint.Check(prefix, sql)
@@ -99,9 +98,7 @@ class TableBuilder(val schema: String, val name: String) {
 
     fun CHECK(sql: String): ICheckBuilder = CheckBuilder(null, sql)
 
-
     val constraints: MutableList<SqlConstraint> = mutableListOf()
-
 
     // обеспечим возможность настройки комментария таблицы в синтаксисе COMMENT IS "Мой комментарий"
     var comment: String? = null
@@ -123,7 +120,7 @@ class TableBuilder(val schema: String, val name: String) {
         infix fun KEY(fields: List<SqlColumn>): IPrimaryKeyBuilder
         operator fun provideDelegate(
             thisRef: Any?,
-            property: KProperty<*>
+            property: KProperty<*>,
         ): ReadOnlyProperty<Any?, SqlConstraint.PrimaryKey>
     }
 
@@ -140,20 +137,16 @@ class TableBuilder(val schema: String, val name: String) {
 
         override fun provideDelegate(
             thisRef: Any?,
-            property: KProperty<*>
+            property: KProperty<*>,
         ): ReadOnlyProperty<Any?, SqlConstraint.PrimaryKey> {
             if (!::pk.isInitialized) {
                 throw Exception("Ключ недоинициализирован")
             }
             return ReadOnlyProperty { _, _ -> pk }
         }
-
-
     }
 
     val PRIMARY: IPrimaryKeyBuilder = PrimaryKeyBuilder()
-
-
 }
 
 class TablePropertyProvider<T>(val builderFunc: TableBuilder.() -> Unit) {
@@ -163,8 +156,8 @@ class TablePropertyProvider<T>(val builderFunc: TableBuilder.() -> Unit) {
         val builder = TableBuilder(schema, name)
         builder.builderFunc() // вызываем нашего билдера
         val result = builder.build() // собственно кэшируем результат
-        // ну и заворачиваем ответ в ReadOnlyProperty<*,SqlTable>
-        return ReadOnlyProperty { _, _ -> result }
+
+        return ReadOnlyProperty { _, _ -> result } // ну и заворачиваем ответ в ReadOnlyProperty<*, SqlTable>
     }
 }
 
